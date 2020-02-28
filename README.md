@@ -4,22 +4,34 @@ This action prints "Hello World" or "Hello" + the name of a person to greet to t
 
 ## Inputs
 
-### `who-to-greet`
+### `users`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Required** The names of the person to impersonate
 
-## Outputs
+### `repo-token`
 
-### `time`
-
-The time we greeted you.
+**Required** A github token to issue the dummy commit.
 
 ## Example usage
 
-uses: actions/hello-world-javascript-action@v1
-with:
-  who-to-greet: 'Mona the Octocat'
+```
+on:
+  push:
+    branches-ignore:
+      - 'master'
 
+jobs:
+  ci_trigger:
+    runs-on: ubuntu-latest
+    name: Impersonated CI Trigger
+    steps:
+      - name: Trigger
+        id: trigger
+        uses: tripodsan/touch-action@v1.5.2
+        with:
+          repo-token: ${{ secrets.MY_GITHUB_TOKEN }}
+          users: [ 'tripod-alt' ]
+```
 
 # Development
 

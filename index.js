@@ -13,11 +13,8 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 async function run() {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
+  const users = core.getInput('users');
+  console.log(`Impersonating for ${users}!`);
 
   // Get client and context
   const client = new github.GitHub(
@@ -30,6 +27,13 @@ async function run() {
   const skip = payload.commits.find((ci) => (ci.message.indexOf('[skip action]') >= 0));
   if (skip) {
     console.log(`skipping due to issue comment: ${skip.message}`);
+    return;
+  }
+
+  // check if any commit is from a configured user
+  const validCommits = payload.commits.filter((ci) => (users.indexOf(ci.author.username) >= 0));
+  if (validCommits.length === 0) {
+    console.log(`no commit by configured users.`);
     return;
   }
 
