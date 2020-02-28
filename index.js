@@ -9,17 +9,15 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-try {
+async function run() {
   // `who-to-greet` input defined in action metadata file
   const nameToGreet = core.getInput('who-to-greet');
   console.log(`Hello ${nameToGreet}!`);
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
-
 
   // Get client and context
   const client = new github.GitHub(
@@ -42,16 +40,14 @@ try {
     tree: payload.head_commit.tree_id,
     parents: [payload.head_commit.id],
   };
-  console.log('would create commit', opts);
 
-  // create a dummy commit
-  // client.git.createCommit({
-  //   owner: payload.repository.owner.name,
-  //   repo: payload.repository.name,
-  //   message: 'chore(ci): trigger ci [skip action]',
-  //   tree: payload.head_commit.,
-  //   parents
-  // });
-} catch (error) {
-  core.setFailed(error.message);
+  // create a the commit
+  console.log('create commit with', opts);
+  await client.git.createCommit(opts);
+
 }
+
+run().catch((error) => {
+  core.setFailed(error.message);
+});
+
