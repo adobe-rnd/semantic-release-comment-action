@@ -42,7 +42,6 @@ jobs:
 $ npm run build
 $ git commit -am"...."
 $ npm release
-$ git push --follow-tags
 ```
 
 

@@ -521,7 +521,7 @@ async function run() {
     core.getInput('repo-token', {required: true})
   );
   const { payload }  = github.context;
-  console.log(`The event payload: ${JSON.stringify(payload, undefined, 2)}`);
+  // console.log(`The event payload: ${JSON.stringify(payload, undefined, 2)}`);
 
   // check if to skip commit
   const skip = payload.commits.find((ci) => (ci.message.indexOf('[skip action]') >= 0));
@@ -533,7 +533,7 @@ async function run() {
   // check if any commit is from a configured user
   const validCommit = payload.commits.find((ci) => (user === ci.author.username));
   if (!validCommit) {
-    console.log(`no commit by configured users.`);
+    console.log(`no commit found by configured user. skipping.`);
     return;
   }
 
@@ -553,9 +553,10 @@ async function run() {
   };
 
   // create a the commit
-  console.log('create commit with', opts);
+  // console.log('create commit with', opts);
   const res = await client.git.createCommit(opts);
-  console.log('result', res);
+  // console.log('result', res);
+  console.log('created commit', res.data.sha);
 
   // update reference (push)
   const updateOpts = {
@@ -565,9 +566,10 @@ async function run() {
     sha: res.data.sha,
     force: false,
   };
-  console.log('pushing', updateOpts);
+  // console.log('pushing', updateOpts);
   const res2 = await client.git.updateRef(updateOpts);
-  console.log('result', res2);
+  // console.log('result', res2);
+  console.log('pushed ref:', res2.data.object.url);
 }
 
 run().catch((error) => {
