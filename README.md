@@ -1,12 +1,13 @@
-# Hello world javascript action
+# Trigger CI Action
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+This action creates a dummy, empty commit when a commit is pushed by
+another user. this can be used to trigger a CI workflow with a different user.
 
 ## Inputs
 
-### `users`
+### `user`
 
-**Required** The names of the person to impersonate
+**Required** The username of the person to impersonate
 
 ### `repo-token`
 
@@ -30,7 +31,7 @@ jobs:
         uses: tripodsan/touch-action@v1.5.2
         with:
           repo-token: ${{ secrets.MY_GITHUB_TOKEN }}
-          users: [ 'tripod-alt' ]
+          user: tripod-alt
 ```
 
 # Development

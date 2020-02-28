@@ -510,8 +510,11 @@ const core = __webpack_require__(470);
 const github = __webpack_require__(469);
 
 async function run() {
-  const users = core.getInput('users');
-  console.log(`Impersonating for ${users}!`);
+  const user = core.getInput('user');
+  if (!user) {
+    throw Error('configuration is missing input for: user');
+  }
+  console.log(`Impersonating for '${user}!`);
 
   // Get client and context
   const client = new github.GitHub(
@@ -528,8 +531,8 @@ async function run() {
   }
 
   // check if any commit is from a configured user
-  const validCommits = payload.commits.filter((ci) => (users.indexOf(ci.author.username) >= 0));
-  if (validCommits.length === 0) {
+  const validCommit = payload.commits.find((ci) => (user === ci.author.username));
+  if (!validCommits) {
     console.log(`no commit by configured users.`);
     return;
   }
