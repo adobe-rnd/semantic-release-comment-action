@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Trigger
         id: trigger
-        uses: tripodsan/touch-action@v1.5.2
+        uses: tripodsan/touch-action@v1.5.7
         with:
           repo-token: ${{ secrets.MY_GITHUB_TOKEN }}
           user: tripod-alt

@@ -1,13 +1,12 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Trigger CI'
+description: 'Creates an empty commit on behalf of another user.'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  user:
+    description: 'user for which to impersonate'
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  repo-token:
+    description: 'github token for creating commit'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
