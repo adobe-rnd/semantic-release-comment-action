@@ -19,3 +19,17 @@ The time we greeted you.
 uses: actions/hello-world-javascript-action@v1
 with:
   who-to-greet: 'Mona the Octocat'
+
+
+# Development
+
+## build and deploy
+
+```sh-session
+$ npm run build
+$ git commit -am"updating...."
+$ npm version patch
+$ git push --follow-tags
+```
+
+

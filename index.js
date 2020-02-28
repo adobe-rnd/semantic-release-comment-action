@@ -33,9 +33,12 @@ async function run() {
     return;
   }
 
+  const owner = payload.repository.owner.name;
+  const repo = payload.repository.name;
+
   const opts = {
-    owner: payload.repository.owner.name,
-    repo: payload.repository.name,
+    owner,
+    repo,
     message: 'chore(ci): trigger ci [skip action]',
     tree: payload.head_commit.tree_id,
     parents: [payload.head_commit.id],
@@ -46,6 +49,17 @@ async function run() {
   const res = await client.git.createCommit(opts);
   console.log('result', res);
 
+  // update reference (push)
+  const updateOpts = {
+    owner,
+    repo,
+    ref: payload.ref,
+    sha: res.data.sha,
+    force: false,
+  };
+  console.log('pushing', updateOpts);
+  const res2 = await client.git.updateRef(updateOpts);
+  console.log('result', res2);
 }
 
 run().catch((error) => {
