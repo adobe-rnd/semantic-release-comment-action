@@ -516,9 +516,39 @@ try {
   console.log(`Hello ${nameToGreet}!`);
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
+
+
+  // Get client and context
+  const client = new github.GitHub(
+    core.getInput('repo-token', {required: true})
+  );
+  const { payload }  = github.context;
+  console.log(`The event payload: ${JSON.stringify(payload, undefined, 2)}`);
+
+  // check if to skip commit
+  const skip = payload.commits.find((ci) => (ci.message.indexOf('[skip action]') >= 0));
+  if (skip) {
+    console.log(`skipping due to issue comment: ${skip.message}`);
+    return;
+  }
+
+  const opts = {
+    owner: payload.repository.owner.name,
+    repo: payload.repository.name,
+    message: 'chore(ci): trigger ci [skip action]',
+    tree: payload.head_commit.tree_id,
+    parents: [payload.head_commit.id],
+  };
+  console.log('would create commit', opts);
+
+  // create a dummy commit
+  // client.git.createCommit({
+  //   owner: payload.repository.owner.name,
+  //   repo: payload.repository.name,
+  //   message: 'chore(ci): trigger ci [skip action]',
+  //   tree: payload.head_commit.,
+  //   parents
+  // });
 } catch (error) {
   core.setFailed(error.message);
 }
