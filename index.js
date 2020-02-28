@@ -17,7 +17,7 @@ async function run() {
   if (!user) {
     throw Error('configuration is missing input for: user');
   }
-  console.log(`Impersonating for '${user}!`);
+  console.log(`Impersonating for '${user}'`);
 
   // Get client and context
   const client = new github.GitHub(
@@ -35,7 +35,7 @@ async function run() {
 
   // check if any commit is from a configured user
   const validCommit = payload.commits.find((ci) => (user === ci.author.username));
-  if (!validCommits) {
+  if (!validCommit) {
     console.log(`no commit by configured users.`);
     return;
   }
