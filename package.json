@@ -1,0 +1,28 @@
+{
+  "name": "github-touch-action",
+  "version": "1.0.0",
+  "description": "Touch a file when a PR from a user is created",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "ncc build index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tripodsan/touch-action.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tripodsan/touch-action/issues"
+  },
+  "homepage": "https://github.com/tripodsan/touch-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.2",
+    "@actions/github": "^2.1.1"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.21.1"
+  }
+}
