@@ -43,7 +43,8 @@ async function run() {
 
   // create a the commit
   console.log('create commit with', opts);
-  await client.git.createCommit(opts);
+  const res = await client.git.createCommit(opts);
+  console.log('result', res);
 
 }
 
