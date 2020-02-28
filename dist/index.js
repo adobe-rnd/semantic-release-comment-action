@@ -532,6 +532,10 @@ async function run() {
 
   const owner = payload.repository.owner.name;
   const repo = payload.repository.name;
+  let ref = payload.ref;
+  if (ref.startsWith('refs/')) {
+    ref = ref.substring(5);
+  }
 
   const opts = {
     owner,
@@ -550,7 +554,7 @@ async function run() {
   const updateOpts = {
     owner,
     repo,
-    ref: payload.ref,
+    ref,
     sha: res.data.sha,
     force: false,
   };

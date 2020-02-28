@@ -27,8 +27,8 @@ with:
 
 ```sh-session
 $ npm run build
-$ git commit -am"updating...."
-$ npm version patch
+$ git commit -am"...."
+$ npm release
 $ git push --follow-tags
 ```
 
