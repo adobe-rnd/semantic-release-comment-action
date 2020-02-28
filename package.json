@@ -1,7 +1,7 @@
 {
   "name": "github-touch-action",
   "private": true,
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Touch a file when a PR from a user is created",
   "main": "index.js",
   "scripts": {
