@@ -529,11 +529,12 @@ async function run() {
   console.log('Getting pulls for', owner, repo, ref);
 
   const pulls = client.pulls.list({
-    owner,
-    repo
+    owner: 'trieloff',
+    repo: 'helix-demo',
+    state: 'open'
   });
 
-  console.log(`All PRs in the repo ${JSON.stringify(pulls, undefined, 2)}`);
+  console.log(`All ${pulls.length} PRs in the repo ${JSON.stringify(pulls, undefined, 2)}`);
 
   // check if to skip commit
   const skip = payload.commits.find((ci) => (ci.message.indexOf('[skip action]') >= 0));
