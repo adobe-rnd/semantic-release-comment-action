@@ -43,6 +43,13 @@ async function run() {
 
   if (pull) {
     console.log(`This belongs to PR #${pull.number}. Getting comments.`);
+    
+    client.issues.comments.createComment({
+      owner,
+      repo,
+      issue_number: pull.number,
+      body: 'This PR will trigger **no release** when merged.'
+    });
 
     const comments = await client.issues.listComments({
       owner,
@@ -52,13 +59,6 @@ async function run() {
 
 
     console.log(JSON.stringify(comments, undefined, 2));
-
-    client.issues.comments.createComment({
-      owner,
-      repo,
-      issue_number: pull.number,
-      body: 'This PR will trigger **no release** when merged.'
-    });
   }
 
   // check if to skip commit
