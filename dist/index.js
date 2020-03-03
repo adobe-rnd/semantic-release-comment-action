@@ -526,6 +526,8 @@ async function run() {
   const owner = payload.repository.owner.name;
   const repo = payload.repository.name;
 
+  console.log('Getting pulls for', owner, repo);
+
   const pulls = client.pulls.list({
     owner,
     repo
