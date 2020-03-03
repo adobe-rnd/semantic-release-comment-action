@@ -547,7 +547,7 @@ async function run() {
       pull_number: pull.number
     });
 
-    console.log(JSON.stringify(comments.data, undefined, 2));
+    console.log(JSON.stringify(comments, undefined, 2));
   }
 
   // check if to skip commit
