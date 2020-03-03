@@ -540,13 +540,15 @@ async function run() {
 
   if (pull) {
     console.log(`This belongs to PR #${pull.number}. Getting comments.`);
-    
-    client.issues.comments.createComment({
+
+    client.issues.createComment({
       owner,
       repo,
       issue_number: pull.number,
       body: 'This PR will trigger **no release** when merged.'
     });
+
+    console.log('Posted a comment…');
 
     const comments = await client.issues.listComments({
       owner,
