@@ -520,13 +520,13 @@ async function run() {
   const client = new github.GitHub(
     core.getInput('repo-token', {required: true})
   );
-  const { payload }  = github.context;
+  const { payload, ref }  = github.context;
   console.log(`The event payload: ${JSON.stringify(payload, undefined, 2)}`);
 
   const owner = payload.repository.owner.name;
   const repo = payload.repository.name;
 
-  console.log('Getting pulls for', owner, repo);
+  console.log('Getting pulls for', owner, repo, ref);
 
   const pulls = client.pulls.list({
     owner,
