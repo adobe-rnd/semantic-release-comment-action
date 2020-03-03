@@ -526,7 +526,7 @@ async function run() {
   const owner = payload.repository.owner.name;
   const repo = payload.repository.name;
 
-  const pulls = github.pulls.list({
+  const pulls = client.pulls.list({
     owner,
     repo
   });
