@@ -26,12 +26,24 @@ async function run() {
   const { payload }  = github.context;
   console.log(`The event payload: ${JSON.stringify(payload, undefined, 2)}`);
 
+  const owner = payload.repository.owner.name;
+  const repo = payload.repository.name;
+
+  const pulls = github.pulls.list({
+    owner,
+    repo
+  });
+
+  console.log(`All PRs in the repo ${JSON.stringify(pulls, undefined, 2)}`);
+
   // check if to skip commit
   const skip = payload.commits.find((ci) => (ci.message.indexOf('[skip action]') >= 0));
   if (skip) {
     console.log(`skipping due to issue comment: ${skip.message}`);
     return;
   }
+
+  throw new Error('failing, so that you can restart more easily.');
 }
 
 run().catch((error) => {
