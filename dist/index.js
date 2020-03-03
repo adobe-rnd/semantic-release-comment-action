@@ -536,9 +536,19 @@ async function run() {
     state: 'open'
   });
 
+  const [ pull ] = pulls.data;
 
+  if (pull) {
+    console.log(`This belongs to PR #${pull.number}. Getting comments.`);
 
-  console.log(`All ${pulls.data.length} PRs in the repo ${JSON.stringify(pulls.data, undefined, 2)}`);
+    const comments = await client.pulls.listComments({
+      owner,
+      repo,
+      pull_number: pull.number
+    });
+
+    console.log(JSON.stringify(comments.data, undefined, 2));
+  }
 
   // check if to skip commit
   const skip = payload.commits.find((ci) => (ci.message.indexOf('[skip action]') >= 0));
