@@ -528,7 +528,7 @@ async function run() {
 
   console.log('Getting pulls for', owner, repo, ref);
 
-  const pulls = client.pulls.list({
+  const pulls = await client.pulls.list({
     owner: 'trieloff',
     repo: 'helix-demo',
     state: 'open'
