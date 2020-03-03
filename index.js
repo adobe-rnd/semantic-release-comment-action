@@ -28,14 +28,18 @@ async function run() {
 
   const owner = payload.repository.owner.name;
   const repo = payload.repository.name;
+  const head = owner + ':' + ref.replace('refs/heads/', '');
 
   console.log('Getting pulls for', owner, repo, ref);
 
-  const pulls = await client.pulls.list({
-    owner: 'trieloff',
-    repo: 'helix-demo',
+  const { data: pulls } = await client.pulls.list({
+    owner,
+    repo,
+    head,
     state: 'open'
   });
+
+
 
   console.log(`All ${pulls.length} PRs in the repo ${JSON.stringify(pulls, undefined, 2)}`);
 
