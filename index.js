@@ -30,9 +30,9 @@ async function run() {
   const repo = payload.repository.name;
   const head = owner + ':' + ref.replace('refs/heads/', '');
 
-  console.log('Getting pulls for', owner, repo, ref);
+  console.log('Getting pulls for', owner, repo, head);
 
-  const { data: pulls } = await client.pulls.list({
+  const pulls = await client.pulls.list({
     owner,
     repo,
     head,
@@ -41,7 +41,7 @@ async function run() {
 
 
 
-  console.log(`All ${pulls.length} PRs in the repo ${JSON.stringify(pulls, undefined, 2)}`);
+  console.log(`All ${pulls.data.length} PRs in the repo ${JSON.stringify(pulls.data, undefined, 2)}`);
 
   // check if to skip commit
   const skip = payload.commits.find((ci) => (ci.message.indexOf('[skip action]') >= 0));
