@@ -50,7 +50,16 @@ async function run() {
       issue_number: pull.number
     });
 
+    const commits = await client.pulls.listCommits({
+      owner,
+      repo,
+      pull_number: pull.number
+    });
+
+    console.log(JSON.stringify(commits.data, undefined, 2));
+
     const [ existing ] = comments.data.filter(comment => (comment.user.login === user && comment.body.match(/^This PR will trigger \*\*(no|a major|a minor|a patch) release\*\* when merged.$/)));
+
 
     if (existing) {
       console.log('Updating existing comment', existing.id);
