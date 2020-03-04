@@ -1141,7 +1141,7 @@ async function run() {
     });
 
     const pluginConfig = {
-      preset: 'angular',
+      // preset: 'angular',
       releaseRules: [{breaking: true, release: 'major'},
       {revert: true, release: 'patch'},
       // Angular

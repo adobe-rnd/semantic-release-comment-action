@@ -863,7 +863,7 @@ const commits = [
 describe("Testing Commit Analyzer", () => {
   it("Analyzes commits", async () => {
     const pluginConfig = {
-      preset: 'angular',
+      //preset: 'angular',
       releaseRules: [{breaking: true, release: 'major'},
       {revert: true, release: 'patch'},
       // Angular
