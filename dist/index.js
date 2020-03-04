@@ -547,10 +547,19 @@ async function run() {
       issue_number: pull.number
     });
 
+    console.log(comments.data);
+    
     const [ existing ] = comments.data.find(comment => (comment.user.login === user && comment.body.match(/^This PR will trigger \*\*(no|a major|a minor|a patch) release\*\* when merged.$/)));
 
     if (existing) {
-      console.log('Updating existing comment');
+      console.log('Updating existing comment', existing.id);
+      client.issues.updateComment({
+        owner,
+        repo,
+        issue_number: pull.number,
+        comment_id: existing.id,
+        body: 'This '
+      })
     } else {
       console.log('Creating a new comment');
       client.issues.createComment({
