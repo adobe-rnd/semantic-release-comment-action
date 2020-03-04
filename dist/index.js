@@ -1183,8 +1183,6 @@ async function run() {
       });
     }
   }
-
-  throw new Error('failing, so that you can restart more easily.');
 }
 
 run().catch((error) => {
