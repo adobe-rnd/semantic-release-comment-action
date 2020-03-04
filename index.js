@@ -51,8 +51,10 @@ async function run() {
     });
 
     console.log(comments.data);
-    
-    const [ existing ] = comments.data.find(comment => (comment.user.login === user && comment.body.match(/^This PR will trigger \*\*(no|a major|a minor|a patch) release\*\* when merged.$/)));
+
+    const [ existing ] = comments.data.filter(comment => (comment.user.login === user && comment.body.match(/^This PR will trigger \*\*(no|a major|a minor|a patch) release\*\* when merged.$/)));
+
+    console.log(existing);
 
     if (existing) {
       console.log('Updating existing comment', existing.id);
