@@ -541,21 +541,25 @@ async function run() {
   if (pull) {
     console.log(`This belongs to PR #${pull.number}. Getting comments.`);
 
-    client.issues.createComment({
-      owner,
-      repo,
-      issue_number: pull.number,
-      body: 'This PR will trigger **no release** when merged.'
-    });
-
-    console.log('Posted a comment…');
-
     const comments = await client.issues.listComments({
       owner,
       repo,
       issue_number: pull.number
     });
 
+    const [ existing ] = comments.data.find(comment => (comment.user.login === user && comment.body.match(/^This PR will trigger \*\*(no|a major|a minor|a patch) release\*\* when merged.$/)));
+
+    if (existing) {
+      console.log('Updating existing comment');
+    } else {
+      console.log('Creating a new comment');
+      client.issues.createComment({
+        owner,
+        repo,
+        issue_number: pull.number,
+        body: 'This PR will trigger **no release** when merged.'
+      });
+    }
 
     console.log(JSON.stringify(comments, undefined, 2));
   }
