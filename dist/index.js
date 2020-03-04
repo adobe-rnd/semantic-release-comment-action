@@ -547,7 +547,7 @@ async function run() {
       issue_number: pull.number
     });
 
-    console.log(comments.data);
+    console.log(comments.data, comments.data.find);
 
     const [ existing ] = comments.data.filter(comment => (comment.user.login === user && comment.body.match(/^This PR will trigger \*\*(no|a major|a minor|a patch) release\*\* when merged.$/)));
 
