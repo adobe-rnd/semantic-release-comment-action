@@ -1150,7 +1150,7 @@ async function run() {
       {type: 'perf', release: 'patch'},]
     };
     const context = {
-      commits: commits.map(commit => commit.commit),
+      commits: commits.data.map(commit => commit.commit),
       logger: console
     };
     const releaseType = await analyzeCommits(pluginConfig, context);
