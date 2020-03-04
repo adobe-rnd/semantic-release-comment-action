@@ -547,11 +547,7 @@ async function run() {
       issue_number: pull.number
     });
 
-    console.log(comments.data, comments.data.find);
-
     const [ existing ] = comments.data.filter(comment => (comment.user.login === user && comment.body.match(/^This PR will trigger \*\*(no|a major|a minor|a patch) release\*\* when merged.$/)));
-
-    console.log(existing);
 
     if (existing) {
       console.log('Updating existing comment', existing.id);
@@ -560,7 +556,7 @@ async function run() {
         repo,
         issue_number: pull.number,
         comment_id: existing.id,
-        body: 'This '
+        body: 'This PR will trigger **a minor** release when merged.'
       })
     } else {
       console.log('Creating a new comment');
@@ -571,8 +567,6 @@ async function run() {
         body: 'This PR will trigger **no release** when merged.'
       });
     }
-
-    console.log(JSON.stringify(comments, undefined, 2));
   }
 
   // check if to skip commit
