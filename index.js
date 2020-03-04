@@ -11,6 +11,8 @@
  */
 const core = require('@actions/core');
 const github = require('@actions/github');
+const { analyzeCommits } = require('@semantic-release/commit-analyzer');
+
 
 async function run() {
   const user = core.getInput('user');
@@ -26,6 +28,13 @@ async function run() {
   const { payload, ref }  = github.context;
   // console.log(`The event payload: ${JSON.stringify(payload, undefined, 2)}`);
 
+  // check if to skip commit
+  const skip = payload.commits.find((ci) => (ci.message.indexOf('[skip action]') >= 0));
+  if (skip) {
+    console.log(`skipping due to issue comment: ${skip.message}`);
+    return;
+  }
+  
   const owner = payload.repository.owner.name;
   const repo = payload.repository.name;
   const head = owner + ':' + ref.replace('refs/heads/', '');
@@ -56,7 +65,26 @@ async function run() {
       pull_number: pull.number
     });
 
-    console.log(JSON.stringify(commits.data, undefined, 2));
+    const pluginConfig = {
+      preset: 'angular',
+      releaseRules: [{breaking: true, release: 'major'},
+      {revert: true, release: 'patch'},
+      // Angular
+      {type: 'feat', release: 'minor'},
+      {type: 'fix', release: 'patch'},
+      {type: 'perf', release: 'patch'},]
+    };
+    const context = {
+      commits: commits.map(commit => commit.commit),
+      logger: console
+    };
+    const releaseType = await analyzeCommits(pluginConfig, context);
+
+    const body = releaseType ? 
+      `This PR will trigger **a ${releaseType} release** when merged.` : 
+      'This PR will trigger **no release** when merged.';
+
+    console.log(body);
 
     const [ existing ] = comments.data.filter(comment => (comment.user.login === user && comment.body.match(/^This PR will trigger \*\*(no|a major|a minor|a patch) release\*\* when merged.$/)));
 
@@ -68,7 +96,7 @@ async function run() {
         repo,
         issue_number: pull.number,
         comment_id: existing.id,
-        body: 'This PR will trigger **a minor** release when merged.'
+        body
       })
     } else {
       console.log('Creating a new comment');
@@ -76,16 +104,9 @@ async function run() {
         owner,
         repo,
         issue_number: pull.number,
-        body: 'This PR will trigger **no release** when merged.'
+        body
       });
     }
-  }
-
-  // check if to skip commit
-  const skip = payload.commits.find((ci) => (ci.message.indexOf('[skip action]') >= 0));
-  if (skip) {
-    console.log(`skipping due to issue comment: ${skip.message}`);
-    return;
   }
 
   throw new Error('failing, so that you can restart more easily.');

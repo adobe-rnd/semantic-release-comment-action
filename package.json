@@ -22,9 +22,11 @@
   "homepage": "https://github.com/tripodsan/touch-action#readme",
   "dependencies": {
     "@actions/core": "^1.2.2",
-    "@actions/github": "^2.1.1"
+    "@actions/github": "^2.1.1",
+    "@semantic-release/commit-analyzer": "^8.0.1"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.21.1"
+    "@zeit/ncc": "^0.21.1",
+    "mocha": "^7.1.0"
   }
 }
