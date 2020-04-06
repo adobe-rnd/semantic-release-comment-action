@@ -6,7 +6,7 @@ This action checks the semantic release type of a pull request.
 
 ### `repo-token`
 
-**Required** A github token to issue the dummy commit.
+**Required** A github token to create the PR comment.
 
 ## Example usage
 
@@ -23,10 +23,9 @@ jobs:
     steps:
       - name: Comment
         id: comment
-        uses: trieloff/semantic-release-comment-action@use-comment-marker
+        uses: adobe-rnd/semantic-release-comment-action@master
         with:
           repo-token: ${{secrets.GITHUB_TOKEN}}
-
 ```
 
 # Development
