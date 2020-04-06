@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Comment
         id: comment
-        uses: adobe-rnd/semantic-release-comment-action@master
+        uses: adobe-rnd/github-semantic-release-comment-action@master
         with:
           repo-token: ${{secrets.GITHUB_TOKEN}}
 ```
