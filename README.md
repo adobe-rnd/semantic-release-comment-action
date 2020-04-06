@@ -1,13 +1,8 @@
-# Trigger CI Action
+# Semantic release status action
 
-This action creates a dummy, empty commit when a commit is pushed by
-another user. this can be used to trigger a CI workflow with a different user.
+This action checks the semantic release type of a pull request.
 
 ## Inputs
-
-### `user`
-
-**Required** The username of the person to impersonate
 
 ### `repo-token`
 
@@ -24,14 +19,14 @@ on:
 jobs:
   ci_trigger:
     runs-on: ubuntu-latest
-    name: Impersonated CI Trigger
+    name: Comment Semantic Release Status
     steps:
-      - name: Trigger
-        id: trigger
-        uses: tripodsan/touch-action@v1.5.7
+      - name: Comment
+        id: comment
+        uses: trieloff/semantic-release-comment-action@use-comment-marker
         with:
-          repo-token: ${{ secrets.MY_GITHUB_TOKEN }}
-          user: tripod-alt
+          repo-token: ${{secrets.GITHUB_TOKEN}}
+
 ```
 
 # Development
