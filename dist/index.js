@@ -1097,7 +1097,7 @@ async function run() {
   );
   const { payload, ref }  = github.context;
 
-  console.log(`The event payload: ${JSON.stringify(payload, undefined, 2)}`);
+  // console.log(`The event payload: ${JSON.stringify(payload, undefined, 2)}`);
 
   // check if to skip commit
   const skip = payload.commits.find((ci) => (ci.message.indexOf('[skip action]') >= 0));
@@ -1159,9 +1159,9 @@ async function run() {
       lines.push('This PR will trigger **no release** when merged.');
     }
     const body = lines.join('\n');
-    console.log(body);
+    console.log(`----------\n${body}\n----------`);
 
-    /// find exiting comment
+    /// reuse exiting comment if present
     const existing = comments.data.find(comment => comment.body.indexOf(COMMENT_MARKER) >= 0);
 
     if (existing) {
