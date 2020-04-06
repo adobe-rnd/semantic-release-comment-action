@@ -5,7 +5,7 @@
   "description": "Touch a file when a PR from a user is created",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "build": "ncc build index.js",
     "release": "npm version patch && git push --follow-tags"
   },
