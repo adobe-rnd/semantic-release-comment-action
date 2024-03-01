@@ -1,12 +1,9 @@
-name: 'Trigger CI'
-description: 'Creates an empty commit on behalf of another user.'
+name: 'Semantic release check'
+description: 'This action checks the semantic release type of a pull request.'
 inputs:
-  user:
-    description: 'user for which to impersonate'
-    required: true
   repo-token:
     description: 'github token for creating commit'
     required: true
 runs:
-  using: 'node12'
+  using: 'node20'
   main: 'dist/index.js'

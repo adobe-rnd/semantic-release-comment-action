@@ -1,5 +1,5 @@
-const assert = require('assert');
-const { analyzeCommits } = require('@semantic-release/commit-analyzer');
+import assert from 'assert';
+import { analyzeCommits } from '@semantic-release/commit-analyzer';
 
 const commits = [
   {
@@ -877,6 +877,6 @@ describe("Testing Commit Analyzer", () => {
     };
     const result = await analyzeCommits(pluginConfig, context);
     assert.equal(result, 'major');
-    
+
   });
 });
