@@ -4,7 +4,7 @@ This action checks the semantic release type of a pull request.
 
 ## Inputs
 
-### `repo-token`
+### `GITHUB_TOKEN`
 
 **Required** A github token to create the PR comment.
 
@@ -25,7 +25,7 @@ jobs:
         id: comment
         uses: adobe-rnd/github-semantic-release-comment-action@main
         with:
-          repo-token: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 ```
 
 # Development
