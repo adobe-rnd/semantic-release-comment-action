@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "test": "mocha",
-    "build": "ncc build index.js",
+    "build": "ncc build index.js -o dist",
     "release": "npm version patch && git push --follow-tags"
   },
   "repository": {
@@ -27,7 +27,7 @@
     "@semantic-release/commit-analyzer": "^11.1.0"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.22.3",
+    "@vercel/ncc": "^0.38.1",
     "mocha": "^10.3.0"
   }
 }
