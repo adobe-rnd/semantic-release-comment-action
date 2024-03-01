@@ -1,8 +1,8 @@
 name: 'Semantic release check'
 description: 'This action checks the semantic release type of a pull request.'
 inputs:
-  repo-token:
-    description: 'github token for creating commit'
+  GITHUB_TOKEN:
+    description: 'github token for creating the pull-request comment'
     required: true
 runs:
   using: 'node20'
