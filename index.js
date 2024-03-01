@@ -36,7 +36,7 @@ async function run() {
 
   console.log('Getting pulls for', owner, repo, head);
 
-  const pulls = await octokit.pulls.list({
+  const pulls = await octokit.rest.pulls.list({
     owner,
     repo,
     head,
@@ -48,13 +48,13 @@ async function run() {
   if (pull) {
     console.log(`This belongs to PR #${pull.number}. Getting comments.`);
 
-    const comments = await octokit.issues.listComments({
+    const comments = await octokit.rest.issues.listComments({
       owner,
       repo,
       issue_number: pull.number
     });
 
-    const commits = await octokit.pulls.listCommits({
+    const commits = await octokit.rest.pulls.listCommits({
       owner,
       repo,
       pull_number: pull.number
@@ -90,7 +90,7 @@ async function run() {
 
     if (existing) {
       console.log('Updating existing comment', existing.id);
-      octokit.issues.updateComment({
+      octokit.rest.issues.updateComment({
         owner,
         repo,
         issue_number: pull.number,
@@ -99,7 +99,7 @@ async function run() {
       })
     } else {
       console.log('Creating a new comment');
-      octokit.issues.createComment({
+      octokit.rest.issues.createComment({
         owner,
         repo,
         issue_number: pull.number,
